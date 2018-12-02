@@ -5,12 +5,14 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.moviedb.nhdphuong.moviedb.data.entities.Movie
+import com.moviedb.nhdphuong.moviedb.support.Constants
 import com.moviedb.nhdphuong.moviedb.usecases.AddMovieToFavoriteListUseCase
 import com.moviedb.nhdphuong.moviedb.usecases.CheckIfFavoriteMovieUseCase
 import com.moviedb.nhdphuong.moviedb.usecases.RemoveMovieFromFavoriteListUseCase
 import com.moviedb.nhdphuong.moviedb.usecases.UseCase
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MovieDetailsViewModel @Inject constructor(
     private val mAddMovieToFavoriteList: AddMovieToFavoriteListUseCase,
@@ -77,7 +79,8 @@ class MovieDetailsViewModel @Inject constructor(
     fun setUpData(
         movie: Movie,
         onDataReady: (
-            bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String
+            bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String,
+            detailsList: List<Pair<String, String>>
         ) -> Unit
     ) {
         mMovie = movie
@@ -88,7 +91,13 @@ class MovieDetailsViewModel @Inject constructor(
         val overview = movie.overview
         val backdropUrl = movie.backdropUrl
         val posterUrl = movie.posterUrl
-        onDataReady(bigTitle, smallTitle, overview, backdropUrl, posterUrl)
+
+        val movieDetailsList = ArrayList<Pair<String, String>>()
+        movieDetailsList.add(Pair(Constants.LANGUAGES, movie.originalLanguage))
+        movieDetailsList.add(Pair(Constants.POPULARITY, movie.popularity.toString()))
+        movieDetailsList.add(Pair(Constants.VOTE_COUNT, movie.voteCount.toString()))
+        movieDetailsList.add(Pair(Constants.RATING, if (movie.isForAdult) Constants.FOR_ADULT else Constants.FOR_ALL_AGES))
+        onDataReady(bigTitle, smallTitle, overview, backdropUrl, posterUrl, movieDetailsList)
         checkFavoriteStatus()
         mAddMovieToFavoriteList.setExecuteCallback(mAddFavoriteCallback)
         mRemoveMovieFromFavoriteList.setExecuteCallback(mRemoveFavoriteCallback)

@@ -36,5 +36,12 @@ class Constants {
         //Others
         const val DATE_FORMAT = "yyyy-MM-dd"
         const val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500"
+
+        const val LANGUAGES = "Languages"
+        const val POPULARITY = "Popularity"
+        const val VOTE_COUNT = "Vote count"
+        const val RATING = "Rating"
+        const val FOR_ADULT = "Adult"
+        const val FOR_ALL_AGES = "All ages"
     }
 }

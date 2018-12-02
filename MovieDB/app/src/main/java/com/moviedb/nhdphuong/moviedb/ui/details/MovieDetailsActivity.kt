@@ -7,11 +7,13 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.moviedb.nhdphuong.moviedb.R
 import com.moviedb.nhdphuong.moviedb.data.entities.Movie
 import com.moviedb.nhdphuong.moviedb.databinding.ActivityMovieDetailsBinding
 import com.moviedb.nhdphuong.moviedb.support.ImageHelper
+import com.moviedb.nhdphuong.moviedb.ui.adapters.MovieDetailsAdapter
 import com.moviedb.nhdphuong.moviedb.ui.autocleared.FragmentActivityAutoClearedValue
 import com.moviedb.nhdphuong.moviedb.viewmodels.AppViewModelFactory
 import com.moviedb.nhdphuong.moviedb.viewmodels.MovieDetailsViewModel
@@ -38,6 +40,8 @@ class MovieDetailsActivity : AppCompatActivity() {
     private var mBinding: FragmentActivityAutoClearedValue<ActivityMovieDetailsBinding>? = null
 
     private var mMovieDetailsViewModel: MovieDetailsViewModel? = null
+
+    private var mMovieDetailsAdapter: MovieDetailsAdapter? = null
 
     private var mFavoriteColorTint = 0
     private var mDefaultColorTint = 0
@@ -80,7 +84,8 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun onDataReady(
-        bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String
+        bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String,
+        detailsList: List<Pair<String, String>>
     ) {
         mBinding?.value?.run {
             tvTitleBig.text = bigTitle
@@ -90,6 +95,17 @@ class MovieDetailsActivity : AppCompatActivity() {
             val placeHolderImage = R.drawable.bg_image_not_found
             ImageHelper.loadImage(backdropUrl, placeHolderImage, ivBackdrop)
             ImageHelper.loadImage(posterUrl, placeHolderImage, ivPoster)
+
+            mMovieDetailsAdapter = MovieDetailsAdapter(detailsList)
+            val linearLayoutManager = object : LinearLayoutManager(this@MovieDetailsActivity) {
+                override fun isAutoMeasureEnabled(): Boolean {
+                    return true
+                }
+            }
+            rvMovieDetails.run {
+                adapter = mMovieDetailsAdapter
+                layoutManager = linearLayoutManager
+            }
         }
     }
 
