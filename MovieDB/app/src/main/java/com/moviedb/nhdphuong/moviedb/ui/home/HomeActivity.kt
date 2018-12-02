@@ -14,17 +14,33 @@ import com.moviedb.nhdphuong.moviedb.ui.autocleared.FragmentActivityAutoClearedV
 class HomeActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "HomeActivity"
+        private const val CURRENT_TAB = "CURRENT_TAB"
     }
 
     private var mHomeActivityBinding: FragmentActivityAutoClearedValue<ActivityMainBinding>? = null
 
     private var mFragmentList: ArrayList<Fragment>? = null
 
+    private var mCurrentTab: Tab = Tab.NOW_SHOWING
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.inflate<ActivityMainBinding>(layoutInflater, R.layout.activity_main, null, false)
         mHomeActivityBinding = FragmentActivityAutoClearedValue(this, binding)
         setContentView(binding?.root)
+
+        savedInstanceState?.run {
+            val currentTab = getInt(CURRENT_TAB, Tab.NOW_SHOWING.number)
+            mCurrentTab = when (currentTab) {
+                Tab.FAVORITE.number -> {
+                    Tab.FAVORITE
+                }
+                else -> {
+                    Tab.NOW_SHOWING
+                }
+            }
+        }
+        toggleTabIndicators(mCurrentTab)
 
         mFragmentList = ArrayList()
         mFragmentList?.add(NowShowingFragment())
@@ -35,18 +51,20 @@ class HomeActivity : AppCompatActivity() {
             tvNowShowing.setOnClickListener {
                 Log.d(TAG, "Now showing tab is chosen")
                 vpHomeTabs.setCurrentItem(0, true)
-                toggletabIndicators(Tab.NOW_SHOWING)
+                mCurrentTab = Tab.NOW_SHOWING
+                toggleTabIndicators(mCurrentTab)
             }
 
             tvFavorite.setOnClickListener {
                 Log.d(TAG, "Favorite tab is chosen")
                 vpHomeTabs.setCurrentItem(1, true)
-                toggletabIndicators(Tab.FAVORITE)
+                mCurrentTab = Tab.FAVORITE
+                toggleTabIndicators(mCurrentTab)
             }
         }
     }
 
-    private fun toggletabIndicators(tab: Tab) {
+    private fun toggleTabIndicators(tab: Tab) {
         mHomeActivityBinding?.value?.run {
             when (tab) {
                 Tab.NOW_SHOWING -> {
@@ -61,8 +79,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private enum class Tab {
-        NOW_SHOWING,
-        FAVORITE
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.run {
+            putInt(CURRENT_TAB, mCurrentTab.number)
+        }
+    }
+
+    private enum class Tab(val number: Int) {
+        NOW_SHOWING(0),
+        FAVORITE(1)
     }
 }
