@@ -29,6 +29,10 @@ class LoadFavoritesMoviesUseCase @Inject constructor(private val mMovieRepositor
         mExecuteCallback = executeCallback
     }
 
+    override fun cleanUp() {
+        mExecuteCallback = null
+    }
+
     data class FavoriteMovieRequest(val offset: Int, val limit: Int) : UseCase.RequestValue
 
     data class FavoriteMovieResponse(val favoriteMovies: List<FavoriteMovie>) : UseCase.ResponseValue

@@ -28,6 +28,10 @@ class CheckIfFavoriteMovieUseCase @Inject constructor(private val mMovieReposito
         mExecuteCallback = executeCallback
     }
 
+    override fun cleanUp() {
+        mExecuteCallback = null
+    }
+
     data class FavoriteMovieRequest(val movieId: Long) : UseCase.RequestValue
 
     data class FavoriteMovieResponse(var isFavorite: Boolean) : UseCase.ResponseValue

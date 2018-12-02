@@ -23,6 +23,10 @@ class GetFavoriteMovieCountUseCase @Inject constructor(private val mMovieReposit
         mExecuteCallback = executeCallback
     }
 
+    override fun cleanUp() {
+        mExecuteCallback = null
+    }
+
     class FavoriteMovieRequest : UseCase.RequestValue
 
     data class FavoriteMovieResponse(val favoriteCount: Int) : UseCase.ResponseValue

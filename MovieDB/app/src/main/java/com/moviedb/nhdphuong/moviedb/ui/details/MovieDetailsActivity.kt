@@ -80,8 +80,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun onDataReady(
-        bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String,
-        trailerThumbnailsList: List<String>
+        bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String
     ) {
         mBinding?.value?.run {
             tvTitleBig.text = bigTitle

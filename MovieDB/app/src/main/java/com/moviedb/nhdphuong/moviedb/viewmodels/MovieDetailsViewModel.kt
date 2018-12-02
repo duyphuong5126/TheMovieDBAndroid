@@ -77,8 +77,7 @@ class MovieDetailsViewModel @Inject constructor(
     fun setUpData(
         movie: Movie,
         onDataReady: (
-            bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String,
-            trailerThumbnailsList: List<String>
+            bigTitle: String, smallTitle: String, overview: String, backdropUrl: String, posterUrl: String
         ) -> Unit
     ) {
         mMovie = movie
@@ -89,7 +88,7 @@ class MovieDetailsViewModel @Inject constructor(
         val overview = movie.overview
         val backdropUrl = movie.backdropUrl
         val posterUrl = movie.posterUrl
-        onDataReady(bigTitle, smallTitle, overview, backdropUrl, posterUrl, emptyList())
+        onDataReady(bigTitle, smallTitle, overview, backdropUrl, posterUrl)
         checkFavoriteStatus()
         mAddMovieToFavoriteList.setExecuteCallback(mAddFavoriteCallback)
         mRemoveMovieFromFavoriteList.setExecuteCallback(mRemoveFavoriteCallback)

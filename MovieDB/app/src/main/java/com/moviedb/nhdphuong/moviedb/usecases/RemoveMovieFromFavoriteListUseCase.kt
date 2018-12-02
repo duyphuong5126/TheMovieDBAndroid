@@ -28,6 +28,10 @@ class RemoveMovieFromFavoriteListUseCase @Inject constructor(private val mMovieR
         mExecuteCallback = executeCallback
     }
 
+    override fun cleanUp() {
+        mExecuteCallback = null
+    }
+
     data class FavoriteMovieRequest(val movieId: Long) : UseCase.RequestValue
 
     data class FavoriteMovieResponse(val isSuccess: Boolean) : UseCase.ResponseValue

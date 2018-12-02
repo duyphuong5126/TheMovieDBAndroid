@@ -26,6 +26,10 @@ class FetchMoviesUseCase @Inject constructor(private val mMovieRepository: Movie
         mExecuteCallback = executeCallback
     }
 
+    override fun cleanUp() {
+        mExecuteCallback = null
+    }
+
     data class FetchMoviesRequestValue(val pageNumber: Int) : UseCase.RequestValue
 
     data class FetchMoviesResponse(private val mMovies: List<Movie>?) : UseCase.ResponseValue {
@@ -33,5 +37,5 @@ class FetchMoviesUseCase @Inject constructor(private val mMovieRepository: Movie
             get() = mMovies ?: emptyList()
     }
 
-    class FetchMoviesError(val message: String, val code: Int) : UseCase.ErrorValue
+    data class FetchMoviesError(val message: String, val code: Int) : UseCase.ErrorValue
 }

@@ -4,6 +4,7 @@ interface UseCase<RQ : UseCase.RequestValue, RV : UseCase.ResponseValue, EV : Us
     fun execute(requestValue: RQ)
     fun cancel()
     fun setExecuteCallback(executeCallback: ExecuteCallback<RV, EV>)
+    fun cleanUp()
 
     interface RequestValue
 
