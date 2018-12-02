@@ -125,7 +125,9 @@ class FavoriteViewModel @Inject constructor(
     private fun generateMoviesList(favoriteMoviesList: List<FavoriteMovie>): List<Movie> {
         val result = ArrayList<Movie>()
         for (favoriteMovie in favoriteMoviesList) {
-            result.add(favoriteMovie.movie)
+            if (!mMoviesList.contains(favoriteMovie.movie)) {
+                result.add(favoriteMovie.movie)
+            }
         }
         return result
     }
