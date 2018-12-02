@@ -11,4 +11,6 @@
     <color name="grey_3">#595656</color>
     <color name="grey_4">#252323</color>
     <color name="red_1">#d81b47</color>
+    <color name="green_1">#008f2b</color>
+    <color name="white">#fff</color>
 </resources>

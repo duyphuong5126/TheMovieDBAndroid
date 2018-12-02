@@ -1,9 +1,11 @@
 package com.moviedb.nhdphuong.moviedb.ui.home
 
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.moviedb.nhdphuong.moviedb.R
 import com.moviedb.nhdphuong.moviedb.databinding.ActivityMainBinding
@@ -35,12 +37,34 @@ class HomeActivity : AppCompatActivity() {
             tvNowShowing.setOnClickListener {
                 Log.d(TAG, "Now showing tab is chosen")
                 vpHomeTabs.setCurrentItem(0, true)
+                toggletabIndicators(Tab.NOW_SHOWING)
             }
 
             tvFavorite.setOnClickListener {
                 Log.d(TAG, "Favorite tab is chosen")
                 vpHomeTabs.setCurrentItem(1, true)
+                toggletabIndicators(Tab.FAVORITE)
             }
         }
+    }
+
+    private fun toggletabIndicators(tab: Tab) {
+        mHomeActivityBinding?.value?.run {
+            when (tab) {
+                Tab.NOW_SHOWING -> {
+                    tvNowShowing.setBackgroundResource(R.drawable.bg_white_bottom_green)
+                    tvFavorite.setBackgroundResource(R.color.white)
+                }
+                else -> {
+                    tvNowShowing.setBackgroundResource(R.color.white)
+                    tvFavorite.setBackgroundResource(R.drawable.bg_white_bottom_green)
+                }
+            }
+        }
+    }
+
+    private enum class Tab {
+        NOW_SHOWING,
+        FAVORITE
     }
 }

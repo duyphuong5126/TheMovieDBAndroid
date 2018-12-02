@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MovieDB</string>
     <string name="now_showing">Now showing</string>
-    <string name="favorite">Favorite</string>
+    <string name="favorites">Favorites</string>
     <string name="big_title_example">Movie\'s name (year)</string>
     <string name="overview_sample">Overview sample</string>
     <string name="trailers">Trailers</string>
