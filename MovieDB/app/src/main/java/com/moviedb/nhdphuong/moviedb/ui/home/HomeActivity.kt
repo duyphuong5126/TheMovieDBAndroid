@@ -1,11 +1,9 @@
 package com.moviedb.nhdphuong.moviedb.ui.home
 
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.moviedb.nhdphuong.moviedb.R
 import com.moviedb.nhdphuong.moviedb.databinding.ActivityMainBinding
